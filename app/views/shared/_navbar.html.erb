@@ -7,7 +7,16 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/sign_up">Профіль</a>
+          
+            <% if @user %>
+              <a class="nav-link" href="#">
+                Профіль
+              </a>
+            <% else %>
+              <a class="nav-link" href="/sign_up">
+                Увійти
+              </a>
+            <% end %>
         </li>
       </ul>
     </div>

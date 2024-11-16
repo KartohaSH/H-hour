@@ -1,1 +1,7 @@
 <h1>Welcome to H-hour main page</h1>
+
+<% if @user %>
+ <% @user.email%>
+<% else %>
+    <p>Not logged in</p>
+<% end %>
