@@ -1,0 +1,23 @@
+<%= form_with model: @product, url: url_for([:admin, @product]), method: @product.persisted? ? :patch : :post do |form| %>
+  <% if @product.errors.any? %>
+    <div class="alert alert-danger">
+      <% @product.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :price %>
+    <%= form.number_field :price, class: "form-control", step: 0.01 %>
+  </div>
+  <%= form.submit class: "btn btn-primary" %>
+<% end %>

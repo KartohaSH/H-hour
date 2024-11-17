@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :products, only: %i[index new create edit update destroy]
+  end
+
   get "sign_up", to: "registrations#new"
   post "sign_up", to: "registrations#create"
 

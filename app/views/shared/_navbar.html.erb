@@ -16,6 +16,11 @@
               <li><%= button_to "Вийти з акаунту", logout_path, method: :delete, class: 'dropdown-item' %></li>
             </ul>
           </li>
+          <% if User.find(session[:user_id]).admin? %>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/products">Admin Panel</a>
+            </li>
+          <% end %>
         <% else %>  
           <li class="nav-item">
             <a class="nav-link" href="/sign_in">
@@ -23,7 +28,6 @@
             </a>
           </li> 
         <% end %>
-        
       </ul>
     </div>
   </div>
