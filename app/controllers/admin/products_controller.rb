@@ -1,6 +1,7 @@
 module Admin
   class ProductsController < ApplicationController
     before_action :ensure_admin  # Перевірка, чи є користувач адміністратором
+    before_action :set_product, only: [:edit, :update, :destroy]
 
     def index
       @products = Product.all
@@ -33,8 +34,12 @@ module Admin
     end
 
     def destroy
-      @product.destroy
-      redirect_to admin_products_path, notice: "Product deleted successfully."
+      if @product
+        @product.destroy
+        redirect_to admin_products_path, notice: "Product deleted successfully."
+      else
+        redirect_to admin_products_path, alert: "Product not found."
+      end
     end
 
     private
@@ -44,7 +49,7 @@ module Admin
     end
 
     def set_product
-      @product = Product.find(params[:id])
+      @product = Product.find_by(id: params[:id]) # Використовуємо `find_by` замість `find` для уникнення помилок
     end
 
     def product_params
