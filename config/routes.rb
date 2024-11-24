@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resource :cart, only: [:show] do
     post 'add_item/:product_id', to: 'carts#add_item', as: :add_item
-    delete 'remove_item/:product_id', to: 'carts#remove_item', as: :remove_item
+    delete 'remove_item/:id', to: 'carts#remove_item', as: :remove_item
   end
   
 

@@ -1,40 +1,40 @@
 class CartsController < ApplicationController
-  before_action :ensure_cart
+  before_action :set_cart
 
   def show
-    @cart_items = current_cart.cart_items.includes(:product)
+    @cart_items = @cart.cart_items
   end
 
   def add_item
     product = Product.find(params[:product_id])
-    cart_item = current_cart.cart_items.find_or_initialize_by(product: product)
-    cart_item.quantity = (cart_item.quantity || 0) + 1 # Ініціалізація значення, якщо воно nil
+    cart_item = @cart.cart_items.find_or_initialize_by(product: product)
+    cart_item.quantity += 1
     if cart_item.save
       redirect_to cart_path, notice: "#{product.name} added to cart!"
     else
-      redirect_to products_path, alert: "Failed to add product to cart."
+      redirect_to products_path, alert: "Failed to add item to cart."
     end
   end
-  
+
   def remove_item
-    product = Product.find(params[:product_id])
-    cart_item = current_cart.cart_items.find_by(product: product)
-  
+    cart_item = @cart.cart_items.find_by(id: params[:id])
     if cart_item
       cart_item.destroy
-      redirect_to cart_path, notice: "#{product.name} was removed from the cart."
+      redirect_to cart_path, notice: "Item removed from cart."
     else
-      redirect_to cart_path, alert: "Product not found in the cart."
+      redirect_to cart_path, alert: "Item not found."
     end
-  end  
+  end
 
   private
 
-  def current_cart
-    @current_cart ||= Cart.find_or_create_by(user: current_user)
-  end
-
-  def ensure_cart
-    redirect_to root_path, alert: "You need to sign in to access your cart." unless current_user
+  def set_cart
+    # Перевірка наявності користувача через сесію (або інший механізм)
+    if session[:user_id]
+      @cart = User.find(session[:user_id]).cart || current_user.create_cart
+    else
+      # Якщо немає користувача, створюємо кошик для гостя
+      @cart = Cart.find_or_create_by(user_id: nil)
+    end
   end
 end

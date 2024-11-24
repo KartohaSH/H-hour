@@ -1,14 +1,14 @@
-<h1>Your Cart</h1>
+<h1>Ваш кошик</h1>
 
 <% if @cart_items.any? %>
   <table class="table">
     <thead>
       <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Total</th>
-        <th>Actions</th>
+        <th>Продукт</th>
+        <th>Кількість</th>
+        <th>Ціна</th>
+        <th>Сума</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -19,18 +19,13 @@
           <td><%= number_to_currency(item.product.price) %></td>
           <td><%= number_to_currency(item.quantity * item.product.price) %></td>
           <td>
-            <%= button_to 'Remove', remove_item_cart_path(product_id: item.product.id), 
-                method: :delete, 
-                class: 'btn btn-danger',
-                data: { confirm: 'Are you sure you want to remove this item?' } 
-            %>
-
+            <%= button_to 'Видалити', remove_item_cart_path(item), method: :delete, class: 'btn btn-danger' %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h3>Total: <%= number_to_currency(@cart_items.sum { |item| item.quantity * item.product.price }) %></h3>
+  <h3>Сума: <%= number_to_currency(@cart_items.sum { |item| item.quantity * item.product.price }) %></h3>
 <% else %>
-  <p>Your cart is empty!</p>
+  <p>Кошик порожній!</p>
 <% end %>

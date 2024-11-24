@@ -9,16 +9,20 @@
 
         <h1><%= @product.name %></h1>
         <h5><%= number_to_currency(@product.price) %></h5>
-        <%= link_to "Назад", root_path, class: "btn btn-secondary" %>
-        <button type="button" class="btn btn-primary">Додати в корзину</button>
+        <%# <%= link_to "Назад", root_path, class: "btn btn-secondary" %> 
+        <%# <button type="button" class="btn btn-primary">Додати в корзину</button> %>
+        <%= form_with url: add_item_cart_path(product_id: @product.id), method: :post, class: "form-inline" do %>
+            <div class="form">
+                <%= number_field_tag :quantity, 1, min: 1, class: "form-control" %>
+            </div>
+            <div class="form">
+                <%= submit_tag "Додати в кошик", class: "btn btn-primary" %>
+            </div>
+        <% end %>
+
         <p><%= @product.description %></p>
     </div>
-    <%= form_with url: add_item_cart_path(product_id: @product.id), method: :post do %>
-    <div>
-        <%= number_field_tag :quantity, 1, min: 1, class: "form-control" %>
-        <%= submit_tag "Add to Cart", class: "btn btn-primary" %>
-    </div>
-    <% end %>
+    
 
     
 
