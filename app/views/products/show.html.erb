@@ -1,4 +1,3 @@
-
 <div>
     <div class="container">
         <% if @product.image.attached? %>
@@ -9,21 +8,41 @@
 
         <h1><%= @product.name %></h1>
         <h5><%= number_to_currency(@product.price) %></h5>
-        <%# <%= link_to "Назад", root_path, class: "btn btn-secondary" %> 
-        <%# <button type="button" class="btn btn-primary">Додати в корзину</button> %>
+
         <%= form_with url: add_item_cart_path(product_id: @product.id), method: :post, class: "form-inline" do %>
-            <div class="form">
+            <div class="form-group mr-2">
                 <%= number_field_tag :quantity, 1, min: 1, class: "form-control" %>
             </div>
-            <div class="form">
+            <div class="form-group">
                 <%= submit_tag "Додати в кошик", class: "btn btn-primary" %>
             </div>
         <% end %>
 
         <p><%= @product.description %></p>
+
+        <% if user_signed_in? %>
+            <h3>Leave a review</h3>
+            <%= form_with model: [ @product, @product.reviews.new ], local: true do |form| %>
+                <div class="form-group">
+                    <%= form.label :content, "Your Review" %>
+                    <%= form.text_area :content, class: "form-control", rows: 4 %>
+                </div>
+                <%= form.submit "Submit Review", class: "btn btn-primary" %>
+            <% end %>
+        <% else %>
+            <p>You need to be logged in to leave a review.</p>
+        <% end %>
+
+        <h3>Reviews:</h3>
+        <% @product.reviews.each do |review| %>
+            <div class="review mb-3">
+                <% if review.user %>
+                    <p><strong><%= review.user.email %></strong></p>
+                <% else %>
+                    <p><strong>Guest</strong></p>
+                <% end %>
+                <p><%= review.content %></p>
+            </div>
+        <% end %>
     </div>
-    
-
-    
-
 </div>

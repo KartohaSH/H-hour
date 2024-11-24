@@ -1,12 +1,7 @@
-class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :create_review]
+class ReviewsController < ApplicationController
+  before_action :set_product
 
-  def show
-    @product = Product.find(params[:id])
-    @reviews = @product.reviews
-  end
-
-  def create_review
+  def create
     @review = @product.reviews.build(review_params)
     @review.user = current_user
 
@@ -20,7 +15,7 @@ class ProductsController < ApplicationController
   private
 
   def set_product
-    @product = Product.find(params[:id])
+    @product = Product.find(params[:product_id])
   end
 
   def review_params
