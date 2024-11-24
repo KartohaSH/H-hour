@@ -6,6 +6,6 @@
 
 class User < ApplicationRecord
   has_secure_password
-
+  has_one :cart, dependent: :destroy
   validates :email, presence: true, format: {with: /\A[^@\s]+@[^@\s]+\z/, message: "Must be a valid e-mail address"}
 end
