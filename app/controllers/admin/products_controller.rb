@@ -34,7 +34,7 @@ module Admin
     end
 
     def destroy
-      if @product
+      if @product.present?
         @product.destroy
         redirect_to admin_products_path, notice: "Product deleted successfully."
       else
@@ -49,11 +49,12 @@ module Admin
     end
 
     def set_product
-      @product = Product.find_by(id: params[:id]) # Використовуємо `find_by` замість `find` для уникнення помилок
+      @product = Product.find(params[:id])
     end
 
     def product_params
-      params.require(:product).permit(:name, :description, :price)
+      params.require(:product).permit(:name, :description, :price, :image, :category)
     end
+    
   end
 end
