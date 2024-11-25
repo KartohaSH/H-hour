@@ -1,13 +1,15 @@
 class RegistrationsController < ApplicationController
+  def new
+    @user = User.new
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.create_cart
       session[:user_id] = @user.id
-      redirect_to root_path, notice: "Successfully created account"
+      redirect_to root_path, notice: "Successfully signed up!"
     else
-      flash[:alert] = "Something went wrong."
-      render :new
+      render :new, alert: "There was a problem with your registration."
     end
   end
 
