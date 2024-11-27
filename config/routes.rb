@@ -1,14 +1,21 @@
 Rails.application.routes.draw do
+  get "orders/show"
   get "carts/show"
 
   namespace :admin do
+    get "orders/index"
     resources :products, except: [:show]
+    resources :orders, only: [:index, :show]
   end  
 
-  resource :cart, only: [:show] do
-    post 'add_item/:product_id', to: 'carts#add_item', as: :add_item
-    delete :remove_item, on: :collection
+  resource :cart do
+    #post 'add_item/:product_id', to: 'carts#add_item', as: :add_item
+    post 'add_item', on: :collection
+    post 'checkout', on: :collection
+    delete 'remove_item/:id', to: 'carts#remove_item', as: :remove_item
   end
+
+  resources :orders, only: [:show]
 
   get "sign_up", to: "registrations#new"
   post "sign_up", to: "registrations#create"

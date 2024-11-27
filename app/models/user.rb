@@ -13,6 +13,10 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :products, through: :reviews
 
+  def admin?
+    admin == true
+  end
+
   # Validations
   validates :email, presence: true, 
                     uniqueness: true, 

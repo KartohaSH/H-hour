@@ -9,14 +9,7 @@
         <h1><%= @product.name %></h1>
         <h5><%= number_to_currency(@product.price) %></h5>
 
-        <%= form_with url: add_item_cart_path(product_id: @product.id), method: :post, class: "form-inline" do %>
-            <div class="form-group mr-2">
-                <%= number_field_tag :quantity, 1, min: 1, class: "form-control" %>
-            </div>
-            <div class="form-group">
-                <%= submit_tag "Додати в кошик", class: "btn btn-primary" %>
-            </div>
-        <% end %>
+        <%= button_to 'Додати до кошика', add_item_cart_path(product_id: @product.id, quantity: 1), method: :post, class: 'btn btn-primary' %>
 
         <p><%= @product.description %></p>
 

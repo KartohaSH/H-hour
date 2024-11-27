@@ -1,6 +1,6 @@
 <h1>Ваш кошик</h1>
 
-<% if @cart_items.any? %>
+<% if @cart_items.present? && @cart_items.any? %>
   <table class="table">
     <thead>
       <tr>
@@ -26,6 +26,9 @@
     </tbody>
   </table>
   <h3>Сума: <%= number_to_currency(@cart_items.sum { |item| item.quantity * item.product.price }) %></h3>
+  <%= button_to "Checkout", checkout_cart_path, method: :post, class: "btn btn-success" %>
+
 <% else %>
   <p>Кошик порожній!</p>
 <% end %>
+

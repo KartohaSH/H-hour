@@ -1,20 +1,67 @@
 class CartsController < ApplicationController
   before_action :set_cart
 
+  def current_cart
+    if user_signed_in?
+      @current_cart ||= Cart.find_or_create_by(user: current_user)
+    else
+      session[:cart_id] ||= Cart.create.id
+      @current_cart ||= Cart.find(session[:cart_id])
+    end
+  end  
+
+  def checkout
+    @cart_items = current_cart.cart_items
+  
+    if @cart_items.any?
+      total_price = @cart_items.sum { |item| item.quantity * item.product.price }
+      order = Order.create(
+        user: current_user, # Може бути nil для гостей
+        total_price: total_price,
+        status: 'pending'
+      )
+  
+      @cart_items.each do |cart_item|
+        order.order_items.create(
+          product: cart_item.product,
+          quantity: cart_item.quantity,
+          price: cart_item.product.price
+        )
+      end
+  
+      @cart_items.destroy_all # Очищення кошика
+      session[:cart_id] = nil # Очистити сесію для гостей
+      redirect_to order_path(order), notice: "Order successfully placed!"
+    else
+      redirect_to cart_path, alert: "Your cart is empty!"
+    end
+  end
+  
+
   def show
+    @cart = current_cart
     @cart_items = @cart.cart_items
   end
 
   def add_item
     product = Product.find(params[:product_id])
-    cart_item = @cart.cart_items.find_or_initialize_by(product: product)
-    cart_item.quantity += 1
-    if cart_item.save
-      redirect_to cart_path, notice: "#{product.name} added to cart!"
+    @cart = current_cart
+    cart_item = @cart.cart_items.find_by(product: product)
+  
+    if cart_item
+      cart_item.quantity += params[:quantity].to_i
     else
-      redirect_to products_path, alert: "Failed to add item to cart."
+      cart_item = @cart.cart_items.new(product: product, quantity: params[:quantity])
+    end
+  
+    if cart_item.save
+      redirect_to cart_path, notice: "#{product.name} додано до кошика!"
+    else
+      redirect_to product_path(product), alert: "Не вдалося додати товар до кошика."
     end
   end
+  
+  
 
   def remove_item
     cart_item = @cart.cart_items.find_by(id: params[:id])
@@ -29,12 +76,7 @@ class CartsController < ApplicationController
   private
 
   def set_cart
-    # Перевірка наявності користувача через сесію (або інший механізм)
-    if session[:user_id]
-      @cart = User.find(session[:user_id]).cart || current_user.create_cart
-    else
-      # Якщо немає користувача, створюємо кошик для гостя
-      @cart = Cart.find_or_create_by(user_id: nil)
-    end
+    @cart = current_cart
   end
+  
 end
