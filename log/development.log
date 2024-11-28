@@ -31709,3 +31709,1118 @@ Processing by CartsController#show as HTML
 Completed 200 OK in 29ms (Views: 11.9ms | ActiveRecord: 0.5ms (6 queries, 1 cached) | GC: 0.2ms)
 
 
+Started POST "/cart/checkout" for 127.0.0.1 at 2024-11-28 10:38:11 +0200
+Processing by CartsController#checkout as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]"}
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."cart_id" = 1 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:16:in `checkout'
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:17:in `checkout'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:17:in `block in checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mOrder Create (1.8ms)[0m  [1m[32mINSERT INTO "orders" ("user_id", "total_price", "status", "created_at", "updated_at") VALUES (2, 2000.0, 'pending', '2024-11-28 08:38:11.765159', '2024-11-28 08:38:11.765159') RETURNING "id" /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mOrderItem Create (1.7ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "product_id", "quantity", "price", "created_at", "updated_at") VALUES (6, 9, 1, 2000.0, '2024-11-28 08:38:11.836030', '2024-11-28 08:38:11.836030') RETURNING "id" /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+  [1m[36mCartItem Destroy (1.2ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 17 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+Redirected to http://127.0.0.1:3000/orders/6
+Completed 302 Found in 118ms (ActiveRecord: 9.3ms (8 queries, 0 cached) | GC: 19.1ms)
+
+
+Started GET "/orders/6" for 127.0.0.1 at 2024-11-28 10:38:11 +0200
+Processing by OrdersController#show as HTML
+  Parameters: {"id"=>"6"}
+  [1m[36mOrder Load (0.2ms)[0m  [1m[34mSELECT "orders".* FROM "orders" WHERE "orders"."id" = 6 LIMIT 1 /*action='show',application='First',controller='orders'*/[0m
+  ↳ app/controllers/orders_controller.rb:11:in `set_order'
+  Rendering layout layouts/application.html.erb
+  Rendering orders/show.html.erb within layouts/application
+  Rendered orders/show.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='orders'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 2.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.1ms | GC: 0.0ms)
+Completed 200 OK in 21ms (Views: 5.5ms | ActiveRecord: 0.2ms (2 queries, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/admin/orders" for 127.0.0.1 at 2024-11-28 10:38:15 +0200
+Processing by Admin::OrdersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering admin/orders/index.html.erb within layouts/application
+  [1m[36mOrder Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:3
+  [1m[36mOrder Load (0.2ms)[0m  [1m[34mSELECT "orders".* FROM "orders" /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 2 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 3 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 4 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 10 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 5 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 6 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  Rendered admin/orders/index.html.erb within layouts/application (Duration: 25.0ms | GC: 0.8ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 27.7ms | GC: 0.8ms)
+Completed 200 OK in 62ms (Views: 27.4ms | ActiveRecord: 1.3ms (16 queries, 6 cached) | GC: 0.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-28 12:26:24 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='First'*/[0m
+Processing by MainController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/controllers/main_controller.rb:5:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering main/index.html.erb within layouts/application
+  [1m[36mProduct Load (1.6ms)[0m  [1m[34mSELECT "products".* FROM "products" /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:4
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 9 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (1.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 11 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 6 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 14 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 9 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  Rendered main/index.html.erb within layouts/application (Duration: 239.5ms | GC: 21.1ms)
+  [1m[36mCACHE User Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:39
+  Rendered shared/_navbar.html.erb (Duration: 42.9ms | GC: 0.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 307.8ms | GC: 22.1ms)
+Completed 200 OK in 520ms (Views: 304.6ms | ActiveRecord: 18.6ms (11 queries, 1 cached) | GC: 22.1ms)
+
+
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6NCwicHVyIjoiYmxvYl9pZCJ9fQ==--48597a979feb65b4e16c9910571cdd1a1c4bd13f/img.jpg" for 127.0.0.1 at 2024-11-28 12:26:25 +0200
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6NiwicHVyIjoiYmxvYl9pZCJ9fQ==--7cb989e4795ea281c07b2b9deb0a7f384ceb3abc/4k-forest-7sfd6znw2ry6hnlt.jpg" for 127.0.0.1 at 2024-11-28 12:26:25 +0200
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6OSwicHVyIjoiYmxvYl9pZCJ9fQ==--d83fbd70453fa3f19cc80ec11b03d508b0f8ff14/img.jpg" for 127.0.0.1 at 2024-11-28 12:26:25 +0200
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6NCwicHVyIjoiYmxvYl9pZCJ9fQ==--48597a979feb65b4e16c9910571cdd1a1c4bd13f", "filename"=>"img"}
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6NiwicHVyIjoiYmxvYl9pZCJ9fQ==--7cb989e4795ea281c07b2b9deb0a7f384ceb3abc", "filename"=>"4k-forest-7sfd6znw2ry6hnlt"}
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6OSwicHVyIjoiYmxvYl9pZCJ9fQ==--d83fbd70453fa3f19cc80ec11b03d508b0f8ff14", "filename"=>"img"}
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='show',application='First',controller='redirect'*/[0m
+[36m  Disk Storage (3.5ms) [0m[34mGenerated URL for file at key: xjpdr7279djqud3olrclp38oq28s (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozMToyNS41ODZaIiwicHVyIjoiYmxvYl9rZXkifX0=--dd0054279aaa93ed67534d2bc319e4e93b3605a4/img.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozMToyNS41ODZaIiwicHVyIjoiYmxvYl9rZXkifX0=--dd0054279aaa93ed67534d2bc319e4e93b3605a4/img.jpg
+Completed 302 Found in 90ms (ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveStorage::Blob Load (0.6ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 6 LIMIT 1 /*action='show',application='First',controller='redirect'*/[0m
+[36m  Disk Storage (2.1ms) [0m[34mGenerated URL for file at key: 1nxgn7rtc1apgwgag18kb55g88tm (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6MzE6MjUuNjE3WiIsInB1ciI6ImJsb2Jfa2V5In19--09c832a3134b11e340b85cfe91db87223c6cfcfd/4k-forest-7sfd6znw2ry6hnlt.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6MzE6MjUuNjE3WiIsInB1ciI6ImJsb2Jfa2V5In19--09c832a3134b11e340b85cfe91db87223c6cfcfd/4k-forest-7sfd6znw2ry6hnlt.jpg
+Completed 302 Found in 85ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 9 LIMIT 1 /*action='show',application='First',controller='redirect'*/[0m
+[36m  Disk Storage (1.0ms) [0m[34mGenerated URL for file at key: k4sywyq5us5puneyp9qlwyh51n3p (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozMToyNS42MzBaIiwicHVyIjoiYmxvYl9rZXkifX0=--b15cca180a6c4a7c2d2d6f124a8f4ba3a3237504/img.jpg)[0m
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6MzE6MjUuNjE3WiIsInB1ciI6ImJsb2Jfa2V5In19--09c832a3134b11e340b85cfe91db87223c6cfcfd/4k-forest-7sfd6znw2ry6hnlt.jpg" for 127.0.0.1 at 2024-11-28 12:26:25 +0200
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozMToyNS42MzBaIiwicHVyIjoiYmxvYl9rZXkifX0=--b15cca180a6c4a7c2d2d6f124a8f4ba3a3237504/img.jpg
+Completed 302 Found in 95ms (ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozMToyNS42MzBaIiwicHVyIjoiYmxvYl9rZXkifX0=--b15cca180a6c4a7c2d2d6f124a8f4ba3a3237504/img.jpg" for 127.0.0.1 at 2024-11-28 12:26:25 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"4k-forest-7sfd6znw2ry6hnlt"}
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Completed 200 OK in 66ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 23.0ms)
+
+
+Completed 200 OK in 41ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozMToyNS41ODZaIiwicHVyIjoiYmxvYl9rZXkifX0=--dd0054279aaa93ed67534d2bc319e4e93b3605a4/img.jpg" for 127.0.0.1 at 2024-11-28 12:26:25 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Completed 200 OK in 15ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/products/9" for 127.0.0.1 at 2024-11-28 12:34:55 +0200
+Processing by ProductsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mProduct Load (4.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/controllers/products_controller.rb:23:in `set_product'
+  [1m[36mCACHE Product Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1[0m
+  ↳ app/controllers/products_controller.rb:5:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering products/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 9 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:4
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."product_id" = 9 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:30
+  [1m[36mCACHE User Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/products/show.html.erb:32
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/products/show.html.erb:32
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/products/show.html.erb:32
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 9 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:32
+  Rendered products/show.html.erb within layouts/application (Duration: 191.1ms | GC: 20.1ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 9.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 213.6ms | GC: 20.3ms)
+Completed 200 OK in 316ms (Views: 215.3ms | ActiveRecord: 5.5ms (11 queries, 5 cached) | GC: 20.3ms)
+
+
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6NCwicHVyIjoiYmxvYl9pZCJ9fQ==--48597a979feb65b4e16c9910571cdd1a1c4bd13f/img.jpg" for 127.0.0.1 at 2024-11-28 12:34:56 +0200
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6NCwicHVyIjoiYmxvYl9pZCJ9fQ==--48597a979feb65b4e16c9910571cdd1a1c4bd13f", "filename"=>"img"}
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='show',application='First',controller='redirect'*/[0m
+[36m  Disk Storage (1.7ms) [0m[34mGenerated URL for file at key: xjpdr7279djqud3olrclp38oq28s (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozOTo1Ni4wNzBaIiwicHVyIjoiYmxvYl9rZXkifX0=--c3bde31c29c3194ad19661bd072be263247dfb7e/img.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozOTo1Ni4wNzBaIiwicHVyIjoiYmxvYl9rZXkifX0=--c3bde31c29c3194ad19661bd072be263247dfb7e/img.jpg
+Completed 302 Found in 41ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozOTo1Ni4wNzBaIiwicHVyIjoiYmxvYl9rZXkifX0=--c3bde31c29c3194ad19661bd072be263247dfb7e/img.jpg" for 127.0.0.1 at 2024-11-28 12:34:56 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Completed 200 OK in 14ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/cart/add_item?product_id=9&quantity=1" for 127.0.0.1 at 2024-11-28 12:34:57 +0200
+Processing by CartsController#add_item as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "product_id"=>"9", "quantity"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.7ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+Completed 500 Internal Server Error in 53ms (ActiveRecord: 0.9ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: carts.user:
+SELECT "carts".* FROM "carts" WHERE "carts"."user" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/
+                                    ^)
+Caused by: SQLite3::SQLException (no such column: carts.user:
+SELECT "carts".* FROM "carts" WHERE "carts"."user" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/
+                                    ^)
+
+Information for: ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: carts.user:
+SELECT "carts".* FROM "carts" WHERE "carts"."user" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/
+                                    ^):
+  
+
+Information for cause: SQLite3::SQLException (no such column: carts.user:
+SELECT "carts".* FROM "carts" WHERE "carts"."user" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/
+                                    ^):
+  
+app/controllers/carts_controller.rb:6:in `current_cart'
+app/controllers/carts_controller.rb:81:in `set_cart'
+Started POST "/cart/add_item?product_id=9&quantity=1" for 127.0.0.1 at 2024-11-28 12:36:42 +0200
+Processing by CartsController#add_item as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "product_id"=>"9", "quantity"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:46:in `add_item'
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 AND "cart_items"."product_id" = 9 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:48:in `add_item'
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+  [1m[36mCartItem Create (3.9ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "product_id", "quantity", "created_at", "updated_at", "order_id") VALUES (1, 9, 1, '2024-11-28 10:36:42.766957', '2024-11-28 10:36:42.766957', NULL) RETURNING "id" /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+Redirected to http://127.0.0.1:3000/cart
+Completed 302 Found in 214ms (ActiveRecord: 12.1ms (5 queries, 0 cached) | GC: 13.6ms)
+
+
+Started GET "/cart" for 127.0.0.1 at 2024-11-28 12:36:42 +0200
+Processing by CartsController#show as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  Rendering layout layouts/application.html.erb
+  Rendering carts/show.html.erb within layouts/application
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/carts/show.html.erb:3
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/carts/show.html.erb:3
+  Rendered carts/show.html.erb within layouts/application (Duration: 35.4ms | GC: 0.0ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:39
+  Rendered shared/_navbar.html.erb (Duration: 11.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 53.6ms | GC: 0.0ms)
+Completed 200 OK in 98ms (Views: 59.3ms | ActiveRecord: 0.6ms (6 queries, 1 cached) | GC: 0.0ms)
+
+
+Started POST "/cart/checkout" for 127.0.0.1 at 2024-11-28 12:36:47 +0200
+Processing by CartsController#checkout as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."cart_id" = 1 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:16:in `checkout'
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:17:in `checkout'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:17:in `block in checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mOrder Create (1.5ms)[0m  [1m[32mINSERT INTO "orders" ("user_id", "total_price", "status", "created_at", "updated_at") VALUES (2, 2000.0, 'pending', '2024-11-28 10:36:47.721193', '2024-11-28 10:36:47.721193') RETURNING "id" /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mOrderItem Create (1.6ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "product_id", "quantity", "price", "created_at", "updated_at") VALUES (7, 9, 1, 2000.0, '2024-11-28 10:36:47.752317', '2024-11-28 10:36:47.752317') RETURNING "id" /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+  [1m[36mCartItem Destroy (1.5ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 18 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+Redirected to http://127.0.0.1:3000/orders/7
+Completed 302 Found in 145ms (ActiveRecord: 6.4ms (8 queries, 0 cached) | GC: 19.1ms)
+
+
+Started GET "/orders/7" for 127.0.0.1 at 2024-11-28 12:36:47 +0200
+Processing by OrdersController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mOrder Load (0.1ms)[0m  [1m[34mSELECT "orders".* FROM "orders" WHERE "orders"."id" = 7 LIMIT 1 /*action='show',application='First',controller='orders'*/[0m
+  ↳ app/controllers/orders_controller.rb:36:in `set_order'
+  Rendering layout layouts/application.html.erb
+  Rendering orders/show.html.erb within layouts/application
+  Rendered orders/show.html.erb within layouts/application (Duration: 2.5ms | GC: 1.8ms)
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='orders'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 20.4ms | GC: 0.8ms)
+  Rendered layout layouts/application.html.erb (Duration: 36.8ms | GC: 7.9ms)
+Completed 200 OK in 74ms (Views: 36.7ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 24.0ms)
+
+
+Started GET "/admin/orders" for 127.0.0.1 at 2024-11-28 12:36:50 +0200
+Processing by Admin::OrdersController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering admin/orders/index.html.erb within layouts/application
+  [1m[36mOrder Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:3
+  [1m[36mOrder Load (0.1ms)[0m  [1m[34mSELECT "orders".* FROM "orders" /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 2 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 3 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 4 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 10 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 5 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 6 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 7 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  Rendered admin/orders/index.html.erb within layouts/application (Duration: 68.0ms | GC: 1.4ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 4.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 76.0ms | GC: 1.4ms)
+Completed 200 OK in 106ms (Views: 76.4ms | ActiveRecord: 1.2ms (18 queries, 7 cached) | GC: 1.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-28 12:37:19 +0200
+Processing by MainController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/controllers/main_controller.rb:5:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering main/index.html.erb within layouts/application
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:4
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 9 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 11 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 6 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 14 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 9 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  Rendered main/index.html.erb within layouts/application (Duration: 104.9ms | GC: 0.0ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:39
+  Rendered shared/_navbar.html.erb (Duration: 5.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 113.9ms | GC: 0.0ms)
+Completed 200 OK in 163ms (Views: 116.2ms | ActiveRecord: 1.7ms (11 queries, 1 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6NiwicHVyIjoiYmxvYl9pZCJ9fQ==--7cb989e4795ea281c07b2b9deb0a7f384ceb3abc/4k-forest-7sfd6znw2ry6hnlt.jpg" for 127.0.0.1 at 2024-11-28 12:37:20 +0200
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6OSwicHVyIjoiYmxvYl9pZCJ9fQ==--d83fbd70453fa3f19cc80ec11b03d508b0f8ff14/img.jpg" for 127.0.0.1 at 2024-11-28 12:37:20 +0200
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozOTo1Ni4wNzBaIiwicHVyIjoiYmxvYl9rZXkifX0=--c3bde31c29c3194ad19661bd072be263247dfb7e/img.jpg" for 127.0.0.1 at 2024-11-28 12:37:20 +0200
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6NiwicHVyIjoiYmxvYl9pZCJ9fQ==--7cb989e4795ea281c07b2b9deb0a7f384ceb3abc", "filename"=>"4k-forest-7sfd6znw2ry6hnlt"}
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6OSwicHVyIjoiYmxvYl9pZCJ9fQ==--d83fbd70453fa3f19cc80ec11b03d508b0f8ff14", "filename"=>"img"}
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 6 LIMIT 1 /*action='show',application='First',controller='redirect'*/[0m
+[36m  Disk Storage (6.1ms) [0m[34mGenerated URL for file at key: 1nxgn7rtc1apgwgag18kb55g88tm (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6NDI6MjAuMjI0WiIsInB1ciI6ImJsb2Jfa2V5In19--429d3413441377760822d69b3df1cf516f47d9f0/4k-forest-7sfd6znw2ry6hnlt.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6NDI6MjAuMjI0WiIsInB1ciI6ImJsb2Jfa2V5In19--429d3413441377760822d69b3df1cf516f47d9f0/4k-forest-7sfd6znw2ry6hnlt.jpg
+Completed 302 Found in 108ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 9 LIMIT 1 /*action='show',application='First',controller='redirect'*/[0m
+[36m  Disk Storage (0.7ms) [0m[34mGenerated URL for file at key: k4sywyq5us5puneyp9qlwyh51n3p (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo0MjoyMC4yNzdaIiwicHVyIjoiYmxvYl9rZXkifX0=--b8331f296a29770389bcb09c291cdf6cd3f6e07b/img.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo0MjoyMC4yNzdaIiwicHVyIjoiYmxvYl9rZXkifX0=--b8331f296a29770389bcb09c291cdf6cd3f6e07b/img.jpg
+Completed 302 Found in 125ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Completed 304 Not Modified in 119ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo0MjoyMC4yNzdaIiwicHVyIjoiYmxvYl9rZXkifX0=--b8331f296a29770389bcb09c291cdf6cd3f6e07b/img.jpg" for 127.0.0.1 at 2024-11-28 12:37:20 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Completed 200 OK in 23ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6NDI6MjAuMjI0WiIsInB1ciI6ImJsb2Jfa2V5In19--429d3413441377760822d69b3df1cf516f47d9f0/4k-forest-7sfd6znw2ry6hnlt.jpg" for 127.0.0.1 at 2024-11-28 12:37:20 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"4k-forest-7sfd6znw2ry6hnlt"}
+Completed 200 OK in 31ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/products/11" for 127.0.0.1 at 2024-11-28 12:37:23 +0200
+Processing by ProductsController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 11 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/controllers/products_controller.rb:23:in `set_product'
+  [1m[36mCACHE Product Load (0.0ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 11 LIMIT 1[0m
+  ↳ app/controllers/products_controller.rb:5:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering products/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 11 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 6 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:4
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."product_id" = 11 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:30
+  Rendered products/show.html.erb within layouts/application (Duration: 49.6ms | GC: 1.5ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 2.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 54.1ms | GC: 1.5ms)
+Completed 200 OK in 122ms (Views: 55.5ms | ActiveRecord: 1.1ms (7 queries, 2 cached) | GC: 16.5ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6NDI6MjAuMjI0WiIsInB1ciI6ImJsb2Jfa2V5In19--429d3413441377760822d69b3df1cf516f47d9f0/4k-forest-7sfd6znw2ry6hnlt.jpg" for 127.0.0.1 at 2024-11-28 12:37:23 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"4k-forest-7sfd6znw2ry6hnlt"}
+Completed 304 Not Modified in 13ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/cart/add_item?product_id=11&quantity=1" for 127.0.0.1 at 2024-11-28 12:37:24 +0200
+Processing by CartsController#add_item as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "product_id"=>"11", "quantity"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 11 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:46:in `add_item'
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 AND "cart_items"."product_id" = 11 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:48:in `add_item'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+  [1m[36mCartItem Create (1.6ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "product_id", "quantity", "created_at", "updated_at", "order_id") VALUES (1, 11, 1, '2024-11-28 10:37:24.430961', '2024-11-28 10:37:24.430961', NULL) RETURNING "id" /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+Redirected to http://127.0.0.1:3000/cart
+Completed 302 Found in 74ms (ActiveRecord: 2.4ms (5 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/cart" for 127.0.0.1 at 2024-11-28 12:37:24 +0200
+Processing by CartsController#show as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  Rendering layout layouts/application.html.erb
+  Rendering carts/show.html.erb within layouts/application
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/carts/show.html.erb:3
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 11 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/carts/show.html.erb:3
+  Rendered carts/show.html.erb within layouts/application (Duration: 13.8ms | GC: 0.0ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:39
+  Rendered shared/_navbar.html.erb (Duration: 3.6ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.2ms | GC: 0.4ms)
+Completed 200 OK in 37ms (Views: 21.6ms | ActiveRecord: 0.6ms (6 queries, 1 cached) | GC: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-28 12:37:26 +0200
+Processing by MainController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/controllers/main_controller.rb:5:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering main/index.html.erb within layouts/application
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:4
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 9 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 11 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 6 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 14 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 9 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  Rendered main/index.html.erb within layouts/application (Duration: 27.5ms | GC: 0.0ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:39
+  Rendered shared/_navbar.html.erb (Duration: 6.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 36.4ms | GC: 0.0ms)
+Completed 200 OK in 82ms (Views: 36.3ms | ActiveRecord: 1.3ms (11 queries, 1 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozOTo1Ni4wNzBaIiwicHVyIjoiYmxvYl9rZXkifX0=--c3bde31c29c3194ad19661bd072be263247dfb7e/img.jpg" for 127.0.0.1 at 2024-11-28 12:37:26 +0200
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6NDI6MjAuMjI0WiIsInB1ciI6ImJsb2Jfa2V5In19--429d3413441377760822d69b3df1cf516f47d9f0/4k-forest-7sfd6znw2ry6hnlt.jpg" for 127.0.0.1 at 2024-11-28 12:37:26 +0200
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo0MjoyMC4yNzdaIiwicHVyIjoiYmxvYl9rZXkifX0=--b8331f296a29770389bcb09c291cdf6cd3f6e07b/img.jpg" for 127.0.0.1 at 2024-11-28 12:37:26 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"4k-forest-7sfd6znw2ry6hnlt"}
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Completed 304 Not Modified in 174ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Completed 304 Not Modified in 174ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Completed 304 Not Modified in 156ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/products/9" for 127.0.0.1 at 2024-11-28 12:37:27 +0200
+Processing by ProductsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/controllers/products_controller.rb:23:in `set_product'
+  [1m[36mCACHE Product Load (0.0ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1[0m
+  ↳ app/controllers/products_controller.rb:5:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering products/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 9 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:4
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."product_id" = 9 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:30
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/products/show.html.erb:32
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/products/show.html.erb:32
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/products/show.html.erb:32
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 9 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:32
+  Rendered products/show.html.erb within layouts/application (Duration: 31.1ms | GC: 0.0ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 9.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 42.5ms | GC: 0.0ms)
+Completed 200 OK in 84ms (Views: 44.6ms | ActiveRecord: 0.8ms (11 queries, 5 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDozOTo1Ni4wNzBaIiwicHVyIjoiYmxvYl9rZXkifX0=--c3bde31c29c3194ad19661bd072be263247dfb7e/img.jpg" for 127.0.0.1 at 2024-11-28 12:37:27 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Completed 304 Not Modified in 23ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/cart/add_item?product_id=9&quantity=1" for 127.0.0.1 at 2024-11-28 12:37:29 +0200
+Processing by CartsController#add_item as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "product_id"=>"9", "quantity"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:46:in `add_item'
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 AND "cart_items"."product_id" = 9 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:48:in `add_item'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+  [1m[36mCartItem Create (1.7ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "product_id", "quantity", "created_at", "updated_at", "order_id") VALUES (1, 9, 1, '2024-11-28 10:37:29.356759', '2024-11-28 10:37:29.356759', NULL) RETURNING "id" /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+Redirected to http://127.0.0.1:3000/cart
+Completed 302 Found in 59ms (ActiveRecord: 2.4ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/cart" for 127.0.0.1 at 2024-11-28 12:37:29 +0200
+Processing by CartsController#show as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  Rendering layout layouts/application.html.erb
+  Rendering carts/show.html.erb within layouts/application
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/carts/show.html.erb:3
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" IN (11, 9) /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/carts/show.html.erb:3
+  Rendered carts/show.html.erb within layouts/application (Duration: 21.0ms | GC: 10.3ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:39
+  Rendered shared/_navbar.html.erb (Duration: 2.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 31.3ms | GC: 10.3ms)
+Completed 200 OK in 58ms (Views: 39.2ms | ActiveRecord: 0.6ms (6 queries, 1 cached) | GC: 10.3ms)
+
+
+Started POST "/cart/checkout" for 127.0.0.1 at 2024-11-28 12:37:35 +0200
+Processing by CartsController#checkout as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."cart_id" = 1 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:16:in `checkout'
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:17:in `checkout'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 11 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:17:in `block in checkout'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:17:in `block in checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mOrder Create (1.6ms)[0m  [1m[32mINSERT INTO "orders" ("user_id", "total_price", "status", "created_at", "updated_at") VALUES (2, 31245127215.0, 'pending', '2024-11-28 10:37:35.378738', '2024-11-28 10:37:35.378738') RETURNING "id" /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mOrderItem Create (2.6ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "product_id", "quantity", "price", "created_at", "updated_at") VALUES (8, 11, 1, 31245125215.0, '2024-11-28 10:37:35.398826', '2024-11-28 10:37:35.398826') RETURNING "id" /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mOrderItem Create (1.4ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "product_id", "quantity", "price", "created_at", "updated_at") VALUES (8, 9, 1, 2000.0, '2024-11-28 10:37:35.408876', '2024-11-28 10:37:35.408876') RETURNING "id" /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+  [1m[36mCartItem Destroy (1.2ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 19 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+  [1m[36mCartItem Destroy (0.2ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 20 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+Redirected to http://127.0.0.1:3000/orders/8
+Completed 302 Found in 74ms (ActiveRecord: 8.3ms (11 queries, 0 cached) | GC: 1.9ms)
+
+
+Started GET "/orders/8" for 127.0.0.1 at 2024-11-28 12:37:35 +0200
+Processing by OrdersController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[36mOrder Load (0.1ms)[0m  [1m[34mSELECT "orders".* FROM "orders" WHERE "orders"."id" = 8 LIMIT 1 /*action='show',application='First',controller='orders'*/[0m
+  ↳ app/controllers/orders_controller.rb:36:in `set_order'
+  Rendering layout layouts/application.html.erb
+  Rendering orders/show.html.erb within layouts/application
+  Rendered orders/show.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='orders'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 2.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.4ms | GC: 0.0ms)
+Completed 200 OK in 26ms (Views: 8.2ms | ActiveRecord: 0.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/admin/orders" for 127.0.0.1 at 2024-11-28 12:37:38 +0200
+Processing by Admin::OrdersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering admin/orders/index.html.erb within layouts/application
+  [1m[36mOrder Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:3
+  [1m[36mOrder Load (0.1ms)[0m  [1m[34mSELECT "orders".* FROM "orders" /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 2 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 3 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 4 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 10 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 5 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 6 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 7 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 8 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  Rendered admin/orders/index.html.erb within layouts/application (Duration: 35.9ms | GC: 1.5ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 3.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 43.6ms | GC: 1.5ms)
+Completed 200 OK in 64ms (Views: 44.2ms | ActiveRecord: 1.3ms (20 queries, 8 cached) | GC: 1.5ms)
+
+
+  [1m[36mOrderItem Load (7.5ms)[0m  [1m[34mSELECT "order_items".* FROM "order_items" /* loading for pp */ LIMIT 11 /*application='First'*/[0m
+Started GET "/" for 127.0.0.1 at 2024-11-28 12:46:58 +0200
+Processing by MainController#index as HTML
+  [1m[36mUser Load (2.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.2ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/controllers/main_controller.rb:5:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering main/index.html.erb within layouts/application
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:4
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 9 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 11 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 6 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 14 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:6
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 9 LIMIT 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/main/index.html.erb:7
+  Rendered main/index.html.erb within layouts/application (Duration: 68.9ms | GC: 2.1ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='index',application='First',controller='main'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:39
+  Rendered shared/_navbar.html.erb (Duration: 19.9ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 111.7ms | GC: 2.3ms)
+Completed 200 OK in 228ms (Views: 116.5ms | ActiveRecord: 3.5ms (11 queries, 1 cached) | GC: 13.5ms)
+
+
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6NiwicHVyIjoiYmxvYl9pZCJ9fQ==--7cb989e4795ea281c07b2b9deb0a7f384ceb3abc/4k-forest-7sfd6znw2ry6hnlt.jpg" for 127.0.0.1 at 2024-11-28 12:46:59 +0200
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6OSwicHVyIjoiYmxvYl9pZCJ9fQ==--d83fbd70453fa3f19cc80ec11b03d508b0f8ff14/img.jpg" for 127.0.0.1 at 2024-11-28 12:46:59 +0200
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6NiwicHVyIjoiYmxvYl9pZCJ9fQ==--7cb989e4795ea281c07b2b9deb0a7f384ceb3abc", "filename"=>"4k-forest-7sfd6znw2ry6hnlt"}
+Started GET "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsiZGF0YSI6NCwicHVyIjoiYmxvYl9pZCJ9fQ==--48597a979feb65b4e16c9910571cdd1a1c4bd13f/img.jpg" for 127.0.0.1 at 2024-11-28 12:46:59 +0200
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6OSwicHVyIjoiYmxvYl9pZCJ9fQ==--d83fbd70453fa3f19cc80ec11b03d508b0f8ff14", "filename"=>"img"}
+Processing by ActiveStorage::Blobs::RedirectController#show as JPEG
+  Parameters: {"signed_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6NCwicHVyIjoiYmxvYl9pZCJ9fQ==--48597a979feb65b4e16c9910571cdd1a1c4bd13f", "filename"=>"img"}
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 6 LIMIT 1 /*action='show',application='First',controller='redirect'*/[0m
+[36m  Disk Storage (3.7ms) [0m[34mGenerated URL for file at key: 1nxgn7rtc1apgwgag18kb55g88tm (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6NTE6NTkuNDUwWiIsInB1ciI6ImJsb2Jfa2V5In19--b9601641a8a8f1005818387dedfd688f77a328dd/4k-forest-7sfd6znw2ry6hnlt.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6NTE6NTkuNDUwWiIsInB1ciI6ImJsb2Jfa2V5In19--b9601641a8a8f1005818387dedfd688f77a328dd/4k-forest-7sfd6znw2ry6hnlt.jpg
+Completed 302 Found in 67ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiIxbnhnbjdydGMxYXBnd2dhZzE4a2I1NWc4OHRtIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnXCI7IGZpbGVuYW1lKj1VVEYtOCcnNGstZm9yZXN0LTdzZmQ2em53MnJ5NmhubHQuanBnIiwiY29udGVudF90eXBlIjoiaW1hZ2UvanBlZyIsInNlcnZpY2VfbmFtZSI6ImxvY2FsIn0sImV4cCI6IjIwMjQtMTEtMjhUMTA6NTE6NTkuNDUwWiIsInB1ciI6ImJsb2Jfa2V5In19--b9601641a8a8f1005818387dedfd688f77a328dd/4k-forest-7sfd6znw2ry6hnlt.jpg" for 127.0.0.1 at 2024-11-28 12:46:59 +0200
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 9 LIMIT 1 /*action='show',application='First',controller='redirect'*/[0m
+[36m  Disk Storage (0.7ms) [0m[34mGenerated URL for file at key: k4sywyq5us5puneyp9qlwyh51n3p (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo1MTo1OS40OTNaIiwicHVyIjoiYmxvYl9rZXkifX0=--fd7dab95dc9cb93ed22eb790038a2af6bbc5e688/img.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo1MTo1OS40OTNaIiwicHVyIjoiYmxvYl9rZXkifX0=--fd7dab95dc9cb93ed22eb790038a2af6bbc5e688/img.jpg
+Completed 302 Found in 80ms (ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJrNHN5d3lxNXVzNXB1bmV5cDlxbHd5aDUxbjNwIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo1MTo1OS40OTNaIiwicHVyIjoiYmxvYl9rZXkifX0=--fd7dab95dc9cb93ed22eb790038a2af6bbc5e688/img.jpg" for 127.0.0.1 at 2024-11-28 12:46:59 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"4k-forest-7sfd6znw2ry6hnlt"}
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='show',application='First',controller='redirect'*/[0m
+[36m  Disk Storage (2.5ms) [0m[34mGenerated URL for file at key: xjpdr7279djqud3olrclp38oq28s (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo1MTo1OS41MTdaIiwicHVyIjoiYmxvYl9rZXkifX0=--e6ce656f5950692e300d65553f13205686165954/img.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo1MTo1OS41MTdaIiwicHVyIjoiYmxvYl9rZXkifX0=--e6ce656f5950692e300d65553f13205686165954/img.jpg
+Completed 302 Found in 100ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo1MTo1OS41MTdaIiwicHVyIjoiYmxvYl9rZXkifX0=--e6ce656f5950692e300d65553f13205686165954/img.jpg" for 127.0.0.1 at 2024-11-28 12:46:59 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Completed 200 OK in 120ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Completed 200 OK in 96ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Completed 200 OK in 90ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/products/9" for 127.0.0.1 at 2024-11-28 12:47:00 +0200
+Processing by ProductsController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/controllers/products_controller.rb:23:in `set_product'
+  [1m[36mCACHE Product Load (0.0ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1[0m
+  ↳ app/controllers/products_controller.rb:5:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering products/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = 9 AND "active_storage_attachments"."record_type" = 'Product' AND "active_storage_attachments"."name" = 'image' LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = 4 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:4
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."product_id" = 9 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:30
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/products/show.html.erb:32
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/products/show.html.erb:32
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/products/show.html.erb:32
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 9 LIMIT 1 /*action='show',application='First',controller='products'*/[0m
+  ↳ app/views/products/show.html.erb:32
+  Rendered products/show.html.erb within layouts/application (Duration: 47.2ms | GC: 12.9ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 4.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 60.3ms | GC: 12.9ms)
+Completed 200 OK in 110ms (Views: 62.8ms | ActiveRecord: 0.9ms (11 queries, 5 cached) | GC: 12.9ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJ4anBkcjcyNzlkanF1ZDNvbHJjbHAzOG9xMjhzIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiaW1nLmpwZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2ltZy5qcGciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9qcGVnIiwic2VydmljZV9uYW1lIjoibG9jYWwifSwiZXhwIjoiMjAyNC0xMS0yOFQxMDo1MTo1OS41MTdaIiwicHVyIjoiYmxvYl9rZXkifX0=--e6ce656f5950692e300d65553f13205686165954/img.jpg" for 127.0.0.1 at 2024-11-28 12:47:00 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"img"}
+Completed 304 Not Modified in 14ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/cart/add_item?product_id=9&quantity=1" for 127.0.0.1 at 2024-11-28 12:47:03 +0200
+Processing by CartsController#add_item as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "product_id"=>"9", "quantity"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:46:in `add_item'
+  [1m[36mCartItem Load (0.2ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 AND "cart_items"."product_id" = 9 LIMIT 1 /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:48:in `add_item'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+  [1m[36mCartItem Create (1.7ms)[0m  [1m[32mINSERT INTO "cart_items" ("cart_id", "product_id", "quantity", "created_at", "updated_at", "order_id") VALUES (1, 9, 1, '2024-11-28 10:47:03.950080', '2024-11-28 10:47:03.950080', NULL) RETURNING "id" /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='add_item',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:56:in `add_item'
+Redirected to http://127.0.0.1:3000/cart
+Completed 302 Found in 71ms (ActiveRecord: 2.4ms (5 queries, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/cart" for 127.0.0.1 at 2024-11-28 12:47:03 +0200
+Processing by CartsController#show as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  Rendering layout layouts/application.html.erb
+  Rendering carts/show.html.erb within layouts/application
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/carts/show.html.erb:3
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/carts/show.html.erb:3
+  Rendered carts/show.html.erb within layouts/application (Duration: 10.1ms | GC: 0.2ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  [1m[36mCartItem Sum (0.1ms)[0m  [1m[34mSELECT SUM("cart_items"."quantity") FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='show',application='First',controller='carts'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:39
+  Rendered shared/_navbar.html.erb (Duration: 2.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.9ms | GC: 0.2ms)
+Completed 200 OK in 31ms (Views: 15.6ms | ActiveRecord: 0.5ms (6 queries, 1 cached) | GC: 0.2ms)
+
+
+Started POST "/cart/checkout" for 127.0.0.1 at 2024-11-28 12:47:06 +0200
+Processing by CartsController#checkout as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  [1m[36mCart Load (0.1ms)[0m  [1m[34mSELECT "carts".* FROM "carts" WHERE "carts"."user_id" = 2 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `current_cart'
+  [1m[36mCartItem Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "cart_items" WHERE "cart_items"."cart_id" = 1 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:16:in `checkout'
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."cart_id" = 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:17:in `checkout'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 9 LIMIT 1 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:17:in `block in checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mOrder Create (1.5ms)[0m  [1m[32mINSERT INTO "orders" ("user_id", "total_price", "status", "created_at", "updated_at") VALUES (2, 2000.0, 'pending', '2024-11-28 10:47:06.364412', '2024-11-28 10:47:06.364412') RETURNING "id" /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:18:in `checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mOrderItem Create (1.5ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "product_id", "quantity", "price", "created_at", "updated_at") VALUES (9, 9, 1, 2000.0, '2024-11-28 10:47:06.394517', '2024-11-28 10:47:06.394517') RETURNING "id" /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:25:in `block in checkout'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+  [1m[36mCartItem Destroy (1.2ms)[0m  [1m[31mDELETE FROM "cart_items" WHERE "cart_items"."id" = 21 /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='checkout',application='First',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:32:in `checkout'
+Redirected to http://127.0.0.1:3000/orders/9
+Completed 302 Found in 95ms (ActiveRecord: 5.1ms (8 queries, 0 cached) | GC: 1.0ms)
+
+
+Started GET "/orders/9" for 127.0.0.1 at 2024-11-28 12:47:06 +0200
+Processing by OrdersController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mOrder Load (0.1ms)[0m  [1m[34mSELECT "orders".* FROM "orders" WHERE "orders"."id" = 9 LIMIT 1 /*action='show',application='First',controller='orders'*/[0m
+  ↳ app/controllers/orders_controller.rb:36:in `set_order'
+  Rendering layout layouts/application.html.erb
+  Rendering orders/show.html.erb within layouts/application
+  Rendered orders/show.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='show',application='First',controller='orders'*/[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 7.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.4ms | GC: 0.0ms)
+Completed 200 OK in 32ms (Views: 12.6ms | ActiveRecord: 0.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/admin/orders" for 127.0.0.1 at 2024-11-28 12:47:09 +0200
+Processing by Admin::OrdersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering admin/orders/index.html.erb within layouts/application
+  [1m[36mOrder Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:3
+  [1m[36mOrder Load (0.2ms)[0m  [1m[34mSELECT "orders".* FROM "orders" /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 2 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 3 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 4 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 10 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 5 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 6 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 7 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 8 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCartItem Load (0.1ms)[0m  [1m[34mSELECT "cart_items".* FROM "cart_items" WHERE "cart_items"."order_id" = 9 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:21
+  Rendered admin/orders/index.html.erb within layouts/application (Duration: 30.5ms | GC: 2.0ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 2.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 34.7ms | GC: 2.0ms)
+Completed 200 OK in 83ms (Views: 40.2ms | ActiveRecord: 1.3ms (22 queries, 9 cached) | GC: 17.0ms)
+
+
+Started GET "/admin/orders" for 127.0.0.1 at 2024-11-28 12:57:23 +0200
+Processing by Admin::OrdersController#index as HTML
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering admin/orders/index.html.erb within layouts/application
+  [1m[36mOrder Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:3
+  [1m[36mOrder Load (0.1ms)[0m  [1m[34mSELECT "orders".* FROM "orders" /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mOrderItem Load (0.3ms)[0m  [1m[34mSELECT "order_items".* FROM "order_items" WHERE "order_items"."order_id" IN (1, 2, 3, 4, 5, 6, 7, 8, 9) /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" IN (9, 11) /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  Rendered admin/orders/index.html.erb within layouts/application (Duration: 95.3ms | GC: 15.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 95.6ms | GC: 15.2ms)
+Completed 500 Internal Server Error in 148ms (ActiveRecord: 2.3ms (6 queries, 1 cached) | GC: 15.2ms)
+
+
+  
+ActionView::Template::Error (undefined method `cart_items' for an instance of Order)
+Caused by: NoMethodError (undefined method `cart_items' for an instance of Order)
+
+Information for: ActionView::Template::Error (undefined method `cart_items' for an instance of Order):
+    18:           <td><%= order.user&.email || "Guest" %></td>
+    19:           <td>
+    20:             <ul>
+    21:               <% order.cart_items.each do |item| %>
+    22:                 <li><%= "#{item.product.name} (x#{item.quantity})" %></li>
+    23:               <% end %>
+    24:             </ul>
+  
+app/views/admin/orders/index.html.erb:21
+app/views/admin/orders/index.html.erb:15
+
+Information for cause: NoMethodError (undefined method `cart_items' for an instance of Order):
+  
+app/views/admin/orders/index.html.erb:21
+app/views/admin/orders/index.html.erb:15
+Started GET "/admin/orders" for 127.0.0.1 at 2024-11-28 12:57:45 +0200
+Processing by Admin::OrdersController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/controllers/application_controller.rb:7:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering admin/orders/index.html.erb within layouts/application
+  [1m[36mOrder Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:3
+  [1m[36mOrder Load (0.2ms)[0m  [1m[34mSELECT "orders".* FROM "orders" /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mOrderItem Load (1.0ms)[0m  [1m[34mSELECT "order_items".* FROM "order_items" WHERE "order_items"."order_id" IN (1, 2, 3, 4, 5, 6, 7, 8, 9) /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" IN (9, 11) /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:15
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 10 LIMIT 1 /*action='index',application='First',controller='orders'*/[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/admin/orders/index.html.erb:18
+  Rendered admin/orders/index.html.erb within layouts/application (Duration: 150.0ms | GC: 53.3ms)
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2 LIMIT 1[0m
+  ↳ app/views/shared/_navbar.html.erb:19
+  Rendered shared/_navbar.html.erb (Duration: 6.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 169.1ms | GC: 53.7ms)
+Completed 200 OK in 244ms (Views: 170.8ms | ActiveRecord: 6.5ms (15 queries, 9 cached) | GC: 75.1ms)
+
+

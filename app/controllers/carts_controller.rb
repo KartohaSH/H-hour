@@ -37,10 +37,9 @@ class CartsController < ApplicationController
     end
   end
   
-
   def show
     @cart = current_cart
-    @cart_items = @cart.cart_items
+    @cart_items = current_cart.cart_items.includes(:product)
   end
 
   def add_item
@@ -61,8 +60,6 @@ class CartsController < ApplicationController
     end
   end
   
-  
-
   def remove_item
     cart_item = @cart.cart_items.find_by(id: params[:id])
     if cart_item
@@ -71,6 +68,11 @@ class CartsController < ApplicationController
     else
       redirect_to cart_path, alert: "Item not found."
     end
+  end
+
+  def destroy
+    current_cart.destroy
+    redirect_to root_path, notice: "Кошик очищено."
   end
 
   private
