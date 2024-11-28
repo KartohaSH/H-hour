@@ -1,30 +1,30 @@
 <%= form_with model: @product, url: admin_product_path(@product), method: :patch do |form| %>
   <div class="mb-3">
-    <%= form.label :name %>
+    <%= form.label "Назва" %>
     <%= form.text_field :name, class: "form-control" %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :description %>
+    <%= form.label "Опис" %>
     <%= form.text_area :description, class: "form-control" %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :price %>
+    <%= form.label "Ціна" %>
     <%= form.number_field :price, class: "form-control", step: "0.01" %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :category %>
+    <%= form.label "Категорія" %>
     <%= form.select :category, options_for_select(["Electronics", "Books", "Clothing", "Toys", "Other"], @product.category), { include_blank: "Select Category" }, class: "form-control" %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :image, "Upload Image" %>
+    <%= form.label :image, "Додайте фото" %>
     <%= form.file_field :image, class: "form-control" %>
   </div>
 
   <div class="mb-3">
-    <%= form.submit "Update Product", class: "btn btn-primary" %>
+    <%= form.submit "Змінити товар", class: "btn btn-primary" %>
   </div>
 <% end %>
