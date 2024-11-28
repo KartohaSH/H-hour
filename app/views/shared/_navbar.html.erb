@@ -37,6 +37,7 @@
         <% end %>
         <li class="nav-item">
           <%= link_to "Кошик (#{@cart&.cart_items&.sum(:quantity) || 0})", cart_path, class: "nav-link" %>
+
         </li>
 
 
