@@ -4,13 +4,13 @@
   <% @products.each do |product| %>
     <div class="card bg-light mb-3" style="width: 18rem;">
       <% if product.image.attached? %>
-        <%= image_tag product.image, class: "card-img-top", size: "200x200" %>
+        <%= image_tag product.image, class: "card-img-top", size: "300x250" %>
       <% else %>
         <p>No Image Available</p>
       <% end %>
       <div class="card-body">
         <h4 class="card-title"><%= product.name %></h2>
-        <p class="card-text"><%= number_to_currency(product.price) %></p>
+        <p class="card-text"><%= number_to_currency(product.price, unit: "₴") %></p>
         <a href=<%= product_path(product) %> class="btn btn-primary">Детальніше</a>
       </div>
     </div>

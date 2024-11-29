@@ -35,7 +35,11 @@ module Admin
 
     def destroy
       if @product.present?
-        @product.destroy
+        ActiveRecord::Base.transaction do
+          @product.cart_items.destroy_all
+          @product.order_items.destroy_all
+          @product.destroy
+        end
         redirect_to admin_products_path, notice: "Product deleted successfully."
       else
         redirect_to admin_products_path, alert: "Product not found."

@@ -16,8 +16,8 @@
         <tr>
           <td><%= item.product.name %></td>
           <td><%= item.quantity %></td>
-          <td><%= number_to_currency(item.product.price) %></td>
-          <td><%= number_to_currency(item.quantity * item.product.price) %></td>
+          <td><%= number_to_currency(item.product.price, unit: "₴") %></td>
+          <td><%= number_to_currency(item.quantity * item.product.price, unit: "₴") %></td>
           <td>
             <%= button_to 'Видалити', remove_item_cart_path(item), method: :delete, class: 'btn btn-danger' %>
           </td>
@@ -26,7 +26,7 @@
     </tbody>
   </table>
   <h3>Сума: <%= number_to_currency(@cart_items.sum { |item| item.quantity * item.product.price }) %></h3>
-  <%= button_to "Checkout", checkout_cart_path, method: :post, class: "btn btn-success" %>
+  <%= button_to "Оформити замовлення", checkout_cart_path, method: :post, class: "btn btn-success" %>
 
 <% else %>
   <p>Кошик порожній!</p>
