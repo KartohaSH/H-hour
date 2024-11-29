@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :set_order, only: :show
 
   def show
-    @card_items = @order.cart_items
+    redirect_to cart_path
   end
 
   def create
@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
 
     if @order.save
       @cart.destroy # очищаємо кошик після створення замовлення
-      redirect_to @order, notice: "Замовлення успішно створено!"
+      redirect_to cart_path, notice: "Замовлення успішно створено!"
     else
       render :new, alert: "Не вдалося створити замовлення."
     end
