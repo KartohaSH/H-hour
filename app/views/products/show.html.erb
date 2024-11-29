@@ -14,19 +14,20 @@
         <p><%= @product.description %></p>
 
         <% if user_signed_in? %>
-            <h3>Leave a review</h3>
+            <h3>Залишити відгук</h3>
             <%= form_with model: [ @product, @product.reviews.new ], local: true do |form| %>
                 <div class="form-group">
-                    <%= form.label :content, "Your Review" %>
+                    <%= form.label :content, "Ваш відгук" %>
                     <%= form.text_area :content, class: "form-control", rows: 4 %>
                 </div>
-                <%= form.submit "Submit Review", class: "btn btn-primary" %>
+                <%= form.submit "Відправити", class: "btn btn-primary" %>
             <% end %>
-        <% else %>
-            <p>You need to be logged in to leave a review.</p>
         <% end %>
 
-        <h3>Reviews:</h3>
+        <h3>Відгуки:</h3>
+        <% if !user_signed_in? %>
+            <p>Щоб залишити відгук потрібно увійти в акаунт</p>
+        <% end %>
         <% @product.reviews.each do |review| %>
             <div class="review mb-3">
                 <% if review.user %>
